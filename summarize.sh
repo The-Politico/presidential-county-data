@@ -22,5 +22,6 @@ select
     sum(votes) as total
 from twelve
 group by fips
+order by fips
 "
 psql prescounty -c "copy (select * from obamaromney) to '`pwd`/output/2012.csv' with CSV HEADER;"

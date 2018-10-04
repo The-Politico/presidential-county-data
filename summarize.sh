@@ -21,6 +21,7 @@ select
     sum(case when candidate ilike '%romney%' then "votes" end) as republican, 
     sum(votes) as total
 from twelve
+where fips is not null
 group by fips
 order by fips
 "

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+csvstack original/2012/*.csv > original/2012/us.csv
+
 echo "Create database"
 dropdb --if-exists prescounty
 createdb prescounty
@@ -45,3 +47,13 @@ psql prescounty -c "CREATE TABLE sixteen (
     candidate_maplight varchar
 );"
 psql prescounty -c "COPY sixteen from '`pwd`/original/2016/2016-precinct-president.csv' DELIMITER ',' CSV HEADER;"
+
+psql prescounty -c "UPDATE sixteen SET county_fips = LEFT(county_fips, 5)"
+
+psql prescounty -c "CREATE TABLE twelve (
+    fips varchar,
+    county varchar,
+    candidate varchar,
+    votes integer
+)"
+psql prescounty -c "COPY twelve from '`pwd`/original/2012/us.csv' DELIMITER ',' CSV HEADER;"

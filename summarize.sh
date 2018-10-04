@@ -14,12 +14,13 @@ group by county_fips
 psql prescounty -c "copy (select * from clintontrump) to '`pwd`/output/2016.csv' with CSV HEADER;"
 
 
-# psql prescounty -c "create or replace view obamaromney as
-# select 
-#     fips, 
-#     sum(case when(candidate ilike '%obama%' then "votes" end) as democrat, 
-#     sum(case when (candidate ilike '%romney%' then "votes" end) as republican, 
-#     sum(votes) as total
-# from sixteen
-# group by fips
-# "
+psql prescounty -c "create or replace view obamaromney as
+select 
+    fips, 
+    sum(case when candidate ilike '%obama%' then "votes" end) as democrat, 
+    sum(case when candidate ilike '%romney%' then "votes" end) as republican, 
+    sum(votes) as total
+from twelve
+group by fips
+"
+psql prescounty -c "copy (select * from obamaromney) to '`pwd`/output/2012.csv' with CSV HEADER;"

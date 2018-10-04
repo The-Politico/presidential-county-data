@@ -16,7 +16,7 @@ psql prescounty -c "copy (select * from clintontrump) to '`pwd`/output/2016.csv'
 
 psql prescounty -c "create or replace view obamaromney as
 select 
-    fips, 
+    fips as county_fips, 
     sum(case when candidate ilike '%obama%' then "votes" end) as democrat, 
     sum(case when candidate ilike '%romney%' then "votes" end) as republican, 
     sum(votes) as total
